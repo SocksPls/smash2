@@ -1,0 +1,15 @@
+{% extends "layout.html" %}
+{% block customhead %}
+    <title>{{ title }}</title>
+{% endblock %}
+{% block nav_home %}active{% endblock %}
+{% block content %}
+    <div class="container">
+      <div class="jumbotron">
+        <h1>{{ title }}</h1>
+        <p>{{ welcometext }}</p>
+        <pre>{{ newstext|safe }}</pre>
+        <a href="{{permalink}}">Permalink</a>
+      </div>
+    </div>
+{% endblock %}
