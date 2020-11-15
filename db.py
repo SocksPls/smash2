@@ -5,6 +5,7 @@ qdb = db.quotes
 adb = db.accounts
 
 live_quotes_count = lambda: qdb.find({ "hidden": False, "approved": True })
+quote_live = lambda quote_id: bool(qdb.find_one({ "hidden": False, "approved": True }))
 
 def get_random_quote():
 
@@ -15,6 +16,12 @@ def get_random_quote():
     ]))[0]
 
     return(x if x else False)
+
+def get_quote_by_id(quote_id):
+    if quote_live(quote_id):
+        return qdb.find_one({ "id": quote_id })
+    else:
+        return False
 
 def add_quote(quote, tags, author):
     qdb.insert_one({

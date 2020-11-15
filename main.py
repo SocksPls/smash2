@@ -61,5 +61,13 @@ def tags():
         tags=db.count_live_quotes_by_tag()
     )
 
+@app.route('/quote/<quote_id>')
+def quote(quote_id):
+    return render_template(
+        "quote.html",
+        title="Quote " + quote_id,
+        quote= db.get_quote_by_id(quote_id)
+    )
+
 if __name__ == "__main__":
     app.run(host="0.0.0.0", debug=True)

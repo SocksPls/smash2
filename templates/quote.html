@@ -1,0 +1,14 @@
+{% extends "layout.html" %}
+{% block customhead %}
+    <title>{{ title }}</title>
+{% endblock %}
+{% block content %}
+
+<div class="container">
+    <pre>
+        {{ quote.quote }}
+    </pre>
+    <p class="text-muted small">Tags: {% for tag in quote.tags %}<a href="/tag/{{tag}}">{{tag}}</a>{% if not loop.last %}, {% endif %}{% endfor %}</p>
+</div>
+
+{% endblock %}
