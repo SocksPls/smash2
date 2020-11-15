@@ -16,7 +16,6 @@ def get_random_quote():
 
     return(x if x else False)
 
-
 def add_quote(quote, tags, author):
     qdb.insert_one({
         "id": nanoid.generate(size=12),
@@ -27,9 +26,23 @@ def add_quote(quote, tags, author):
         "approved": False
     })
 
-
 def get_latest_quotes(page=1):
     return list(qdb \
         .find({ "hidden": False, "approved": True }) \
         .sort( "_id", 1 ) \
         .limit(page*10)[(page-1)*10:])
+
+def get_live_quotes_by_tag(tag):
+    return list(qdb \
+        .find({ "hidden": False, "approved": True, "tags": tag}))
+
+def get_all_tags():
+    return qdb \
+        .find({ "hidden": False, "approved": True}) \
+        .distinct("tags")
+
+def count_live_quotes_by_tag():
+    quotes = {}
+    for tag in get_all_tags():
+        quotes[tag] = len(get_live_quotes_by_tag(tag))
+    return quotes

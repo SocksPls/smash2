@@ -53,5 +53,13 @@ def latest():
     )
 
 
+@app.route('/tags')
+def tags():
+    return render_template(
+        "tags.html",
+        title="Tags",
+        tags=db.count_live_quotes_by_tag()
+    )
+
 if __name__ == "__main__":
     app.run(host="0.0.0.0", debug=True)
