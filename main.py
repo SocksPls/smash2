@@ -1,14 +1,14 @@
 import datetime, random, json, pymongo
 from flask import Flask, render_template, Markup, request, abort, session, g
-import db as dblib
+import db
 #from smash import app, conf
 
 app = Flask(__name__)
 
 #Connect to and define db
 connection = pymongo.MongoClient()
-db = connection.testdb
-qdb = db.quotes
+real_db = connection.testdb
+qdb = real_db.quotes
 
 def timestamp():
     return datetime.datetime.now().strftime("%H:%M:%S %d/%m/%y")
@@ -26,13 +26,13 @@ def index():
     news = "No quotes yet!"
     #welcome = conf.config['MOTD']
     welcome = "MOTD"
-    print(qdb.find().count())
+    #print(qdb.find().count())
     qCount = qdb.find({"hidden": False}).count()
-    print(type(qCount))
-    news = "Home of " + str(qCount) + " dumb quotes!"
+    #print(type(qCount))
+    news = "Home of " + "5" + " dumb quotes!"
     if qCount > 0:
-        rand_quote = dblib.get_random_quote()
-        quote_text = Markup.escape(rand_quote['quote'])#.replace('\n', '<br />')
+        rand_quote = db.get_random_quote()
+        quote_text = Markup.escape(rand_quote['quote']) if rand_quote else "There are no quotes in the database!"
         news = quote_text
         permalink = str(rand_quote['id'])
 
@@ -42,6 +42,14 @@ def index():
         welcometext=welcome,
         newstext=news,
         permalink=permalink
+    )
+
+@app.route('/latest')
+def latest():
+    return render_template(
+        "latest.html",
+        title="Latest",
+        quotes=db.get_latest_quotes()
     )
 
 

@@ -1,0 +1,30 @@
+{% extends "layout.html" %}
+{% block customhead %}
+    <title>{{ title }}</title>
+{% endblock %}
+{% block nav_latest %}active{% endblock %}
+{% block content %}
+
+<div class = "container">
+    <h1 class="display-4 mb-5">Latest Quotes</h1>
+
+    {% for quote in quotes %}
+    <div>
+        <div class="d-flex justify-content-between">
+            <p class="h4">Quote {{quote.id}}</p>
+            <span>
+                <!-- These buttons will be admin tools -->
+                <button class="btn btn-link btn-sm"><i class="fas fa-pencil-alt"></i></button>
+                <button class="btn btn-link text-danger btn-sm"><i class="fas fa-times"></i></button>
+            </span>
+        </div>
+
+        <pre>{{ quote.quote }}</pre>
+
+        <p class="text-muted small">Tags: {% for tag in quote.tags %}<a href="/tag/{{tag}}">{{tag}}</a>{% if not loop.last %}, {% endif %}{% endfor %}</p>
+
+    </div>
+    {% endfor %}
+</div>
+
+{% endblock %}
