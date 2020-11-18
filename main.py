@@ -64,12 +64,24 @@ def tags():
 
 @app.route('/tags/<t>')
 def tag(t):
-    return render_template(
-        "list.html",
-        title=t,
-        header="Quotes matching: " + t, 
-        quotes=db.get_live_quotes_by_tag(t)
-    )
+    if db.tag_live(t):
+        return render_template(
+            "list.html",
+            title=t,
+            header="Quotes matching: " + t,
+            quotes=db.get_live_quotes_by_tag(t)
+        )
+    else:
+        return render_template(
+            "message.html",
+            title="Error!",
+            message={
+                "type": "danger",
+                "heading": "No matching quotes",
+                "message": f"There are no quotes with the tag \"{t}\" in the database"
+            }
+        )
+
 
 @app.route('/quote/<quote_id>')
 def quote(quote_id):

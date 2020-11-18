@@ -6,6 +6,7 @@ adb = db.accounts
 
 live_quotes_count = lambda: qdb.find({ "hidden": False, "approved": True })
 quote_live = lambda quote_id: bool(qdb.find_one({ "hidden": False, "approved": True }))
+tag_live = lambda tag: bool(qdb.find_one({ "hidden": False, "approved": True, "tags": tag }))
 
 def get_random_quote():
 
