@@ -11,14 +11,14 @@
     <div class="col-12 col-md-5">
         <ul class="list-group">
             {% for tag,count in tags.items() %}
-                <li class="list-group-item d-flex justify-content-between align-items-center">
+                <a href="/tags/{{ tag }}" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
                     {{ tag }}
                     <span class="badge badge-primary badge-pill">{{ count }}</span>
-                </li>
+                </a>
             {% endfor %}
         </ul>
     </div>
-    
+
 </div>
 
 {% endblock %}

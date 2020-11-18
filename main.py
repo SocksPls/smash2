@@ -47,8 +47,9 @@ def index():
 @app.route('/latest')
 def latest():
     return render_template(
-        "latest.html",
+        "list.html",
         title="Latest",
+        header="Latest Quotes",
         quotes=db.get_latest_quotes()
     )
 
@@ -59,6 +60,15 @@ def tags():
         "tags.html",
         title="Tags",
         tags=db.count_live_quotes_by_tag()
+    )
+
+@app.route('/tags/<t>')
+def tag(t):
+    return render_template(
+        "list.html",
+        title=t,
+        header="Quotes matching: " + t, 
+        quotes=db.get_live_quotes_by_tag(t)
     )
 
 @app.route('/quote/<quote_id>')

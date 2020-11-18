@@ -8,7 +8,7 @@
     <pre>
         {{ quote.quote }}
     </pre>
-    <p class="text-muted small">Tags: {% for tag in quote.tags %}<a href="/tag/{{tag}}">{{tag}}</a>{% if not loop.last %}, {% endif %}{% endfor %}</p>
+    <p class="text-muted small">Tags: {% for tag in quote.tags %}<a href="/tags/{{tag}}">{{tag}}</a>{% if not loop.last %}, {% endif %}{% endfor %}</p>
 </div>
 
 {% endblock %}

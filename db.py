@@ -41,7 +41,8 @@ def get_latest_quotes(page=1):
 
 def get_live_quotes_by_tag(tag):
     return list(qdb \
-        .find({ "hidden": False, "approved": True, "tags": tag}))
+        .find({ "hidden": False, "approved": True, "tags": tag}) \
+        .sort( "_id", 1 ))
 
 def get_all_tags():
     return qdb \
