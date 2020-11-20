@@ -4,7 +4,7 @@ db = connection.smash
 qdb = db.quotes
 adb = db.accounts
 
-live_quotes_count = lambda: qdb.find({ "hidden": False, "approved": True })
+count_live_quotes = lambda: qdb.find({ "hidden": False, "approved": True }).count()
 quote_live = lambda quote_id: bool(qdb.find_one({ "hidden": False, "approved": True }))
 tag_live = lambda tag: bool(qdb.find_one({ "hidden": False, "approved": True, "tags": tag }))
 

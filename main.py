@@ -4,6 +4,7 @@ import db
 from config import config
 
 app = Flask(__name__)
+app.secret_key = config['secret-key']
 
 #Connect to and define db
 connection = pymongo.MongoClient()
@@ -25,20 +26,24 @@ def message(level, msg):
 def index():
     news = "No quotes yet!"
     welcome = config['MOTD']
-    #print(qdb.find().count())
-    qCount = qdb.find({"hidden": False}).count()
-    #print(type(qCount))
-    news = "Home of " + "5" + " dumb quotes!"
-    if qCount > 0:
-        rand_quote = db.get_random_quote()
-        quote_text = Markup.escape(rand_quote['quote']) if rand_quote else "There are no quotes in the database!"
-        news = quote_text
-        permalink = str(rand_quote['id'])
+    quotes_count = db.count_live_quotes()
+
+    if ( quotes_count > 0 ) and ( config['random-quote'] ):
+        random_quote = db.get_random_quote()
+        news = Markup.escape(random_quote['quote'])
+        permalink = str(random_quote['id'])
+    elif ( quotes_count > 0 ):
+        news = "Home of " + str(quotes_count) + " quotes!"
+        permalink = None
+    else:
+        news = "There are no quotes in the database!"
+        permalink = None
+
 
     return render_template(
         "index.html",
-        title="Quotes" + config["site-name"],
-        welcometext=welcome,
+        title="Quotes - " + config["site-name"],
+        header=welcome,
         newstext=news,
         permalink=permalink
     )
