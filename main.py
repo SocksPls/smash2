@@ -1,7 +1,7 @@
 import datetime, random, json, pymongo
 from flask import Flask, render_template, Markup, request, abort, session, g
 import db
-#from smash import app, conf
+from config import config
 
 app = Flask(__name__)
 
@@ -24,8 +24,7 @@ def message(level, msg):
 @app.route('/')
 def index():
     news = "No quotes yet!"
-    #welcome = conf.config['MOTD']
-    welcome = "MOTD"
+    welcome = config['MOTD']
     #print(qdb.find().count())
     qCount = qdb.find({"hidden": False}).count()
     #print(type(qCount))
@@ -38,7 +37,7 @@ def index():
 
     return render_template(
         "index.html",
-        title="Quotes",
+        title="Quotes" + config["site-name"],
         welcometext=welcome,
         newstext=news,
         permalink=permalink
