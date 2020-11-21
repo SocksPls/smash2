@@ -2,7 +2,7 @@
 {% block customhead %}
     <title>{{ title }}</title>
 {% endblock %}
-{% block nav_latest %}active{% endblock %}
+{% block nav_latest %}{% if latest %}active{% endif %}{% endblock %}
 {% block content %}
 
 <div class="container">
