@@ -1,8 +1,8 @@
 import pymongo, nanoid
-connection = pymongo.MongoClient()
-db = connection.smash
-qdb = db.quotes
-adb = db.accounts
+from config import config
+connection = pymongo.MongoClient(config['db']['server'])
+db = connection[config['db']['database']]
+qdb = db[config['db']['collection']]
 
 count_live_quotes = lambda: qdb.find({ "hidden": False, "approved": True }).count()
 quote_live = lambda quote_id: bool(qdb.find_one({ "hidden": False, "approved": True }))
@@ -26,7 +26,7 @@ def get_quote_by_id(quote_id):
 
 def add_quote(quote, tags, author):
     qdb.insert_one({
-        "id": nanoid.generate(size=12),
+        "id": nanoid.generate(size=config['quote-id-length']),
         "quote": quote,
         "tags": tags,
         "author": author,
@@ -37,7 +37,7 @@ def add_quote(quote, tags, author):
 def get_latest_quotes(page=1):
     return list(qdb \
         .find({ "hidden": False, "approved": True }) \
-        .sort( "_id", 1 ) \
+        .sort( "_id", -1 ) \
         .limit(page*10)[(page-1)*10:])
 
 def get_live_quotes_by_tag(tag):

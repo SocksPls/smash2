@@ -6,11 +6,6 @@ from config import config
 app = Flask(__name__)
 app.secret_key = config['secret-key']
 
-#Connect to and define db
-connection = pymongo.MongoClient()
-real_db = connection.testdb
-qdb = real_db.quotes
-
 def timestamp():
     return datetime.datetime.now().strftime("%H:%M:%S %d/%m/%y")
 
