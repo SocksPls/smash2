@@ -1,12 +1,16 @@
 config = {
+    # Site Name will be shown in page titles and in navbar
     "site-name": "Quotes Database",
+
+    # MOTD will be shown as header text on the homepage
     "MOTD": "Welcome to the quotes database",
+
+    # Show random quote on homepage
     "random-quote": True,
+
+    # Used to protect against session data tampering
     "secret-key": "This should be a complex random value",
+
+    # For approving or removing quotes
     "administrator-password": "This should be a different complex random value",
 }
-
-# site-name will be shown in page titles and in the navbar
-# MOTD will be shown on the homepage above a random quote
-# random-quote will set whether a random quote is shown on the homepage
-# secret-key is used to protect session data from tampering
